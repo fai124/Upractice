@@ -1,10 +1,11 @@
 <template>
     <div class="admin-panel">
         <h1 class="page-title">Управление рецептами и категориями</h1>
-        
+
         <div class="admin-actions">
             <button class="action-btn primary" @click.prevent="changePage('AddRecipePage')">+ Добавление рецепта</button>
             <button class="action-btn primary" @click.prevent="changePage('AddCategoryPage')">+ Добавление категории</button>
+            <button class="action-btn primary" @click.prevent="changePage('IngredientPage')">+ Добавление Ингредиента</button>
         </div>
 
         <RecipesComponent :changePage="changePage" :datasend="datasend" :difficulty="difficulty" />

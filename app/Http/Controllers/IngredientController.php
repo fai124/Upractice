@@ -11,7 +11,7 @@ class IngredientController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function getIngredients()
     {
         return Ingredient::get()->keyBy('id');
     }
@@ -19,9 +19,22 @@ class IngredientController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function saveIngredient(StoreIngredientRequest $request)
     {
-        //
+    if ($request->id) {
+        $ingredient = Ingredient::find($request->id);
+        if (!$ingredient) {
+            return response()->json(['error' => 'Ингредиент не найден'], 404);
+        }
+    } else {
+        $ingredient = new Ingredient();
+    }
+
+    $ingredient->name = $request->name;
+    $ingredient->unit = $request->unit;
+    $ingredient->save();
+
+    return response()->json($ingredient, $request->id ? 200 : 201);
     }
 
     /**
@@ -53,14 +66,19 @@ class IngredientController extends Controller
      */
     public function update(UpdateIngredientRequest $request, Ingredient $ingredient)
     {
-        //
+        $ingredient->name = $request->name;
+        $ingredient->unit = $request->unit;
+        $ingredient->save();
+
+    return response()->json($ingredient);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Ingredient $ingredient)
+    public function delIngredient(Ingredient $ingredient)
     {
-        //
+        $ingredient->delete();
+        return response()->json(['message' => 'удалён']);
     }
 }

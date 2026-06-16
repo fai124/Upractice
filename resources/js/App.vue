@@ -1,50 +1,26 @@
 <template>
-    <HeaderComponent :datasend="datasend" :changeToken="changeToken" :logout="logout" :user="user" :isAdmin="isAdmin" :changePage="changePage" />
+    <HeaderComponent :datasend="datasend" :changeToken="changeToken" :logout="logout" :user="user" :isAdmin="isAdmin"
+        :changePage="changePage" />
     <NotificationComponent :changeToken="changeToken" :logout="logout" />
     <template v-if="isLoad">
-        <RecipesPage
-            v-if="page == 'RecipesPage'"
-            :changePage="changePage"
-            :datasend="datasend"
-            :user="user"
-            :isAdmin="isAdmin"
-            :storage="storage"
-            :difficulty="difficulty"
-            :userInfo="userInfo"
-        />
-        <SingleRecipePage
-            v-if="page == 'SingleRecipePage'"
-            :changePage="changePage"
-            :datasend="datasend"
-            :user="user"
-            :pageId="pageId"
-            :isAdmin="isAdmin"
-            :storage="storage"
-            :difficulty="difficulty"
-            :userInfo="userInfo"
-        />
-        <EditSingleRecipe
-            v-if="page == 'EditSingleRecipe'"
-            :changePage="changePage"
-            :datasend="datasend"
-            :user="user"
-            :pageId="pageId"
-            :isAdmin="isAdmin"
-            :storage="storage"
-            :difficulty="difficulty"
-        />
+        <RecipesPage v-if="page == 'RecipesPage'" :changePage="changePage" :datasend="datasend" :user="user"
+            :isAdmin="isAdmin" :storage="storage" :difficulty="difficulty" :userInfo="userInfo" />
+        <SingleRecipePage v-if="page == 'SingleRecipePage'" :changePage="changePage" :datasend="datasend" :user="user"
+            :pageId="pageId" :isAdmin="isAdmin" :storage="storage" :difficulty="difficulty" :userInfo="userInfo" />
+        <EditSingleRecipe v-if="page == 'EditSingleRecipe'" :changePage="changePage" :datasend="datasend" :user="user"
+            :pageId="pageId" :isAdmin="isAdmin" :storage="storage" :difficulty="difficulty" />
         <UsersControlPage v-if="page == 'UsersControlPage' && isAdmin" :changePage="changePage" :datasend="datasend" />
-        <ProfilePage
-            v-if="page == 'ProfilePage' && user && !isAdmin"
-            :changePage="changePage"
-            :datasend="datasend"
-            :storage="storage"
-            :difficulty="difficulty"
-        />
+        <ProfilePage v-if="page == 'ProfilePage' && user && !isAdmin" :changePage="changePage" :datasend="datasend"
+            :storage="storage" :difficulty="difficulty" />
 
-        <RecipesControlPage v-if="page == 'RecipesControlPage' && isAdmin" :changePage="changePage" :datasend="datasend" :difficulty="difficulty" />
-        <AddCategoryPage v-if="page == 'AddCategoryPage'" :datasend="datasend" :changePage="changePage" :pageId="pageId" />
-        <AddRecipePage v-if="page == 'AddRecipePage'" :datasend="datasend" :changePage="changePage" :pageId="pageId" :getUser="getUser" />
+        <RecipesControlPage v-if="page == 'RecipesControlPage' && isAdmin" :changePage="changePage" :datasend="datasend"
+            :difficulty="difficulty" />
+        <IngredientPage v-if="page == 'IngredientPage' && isAdmin" :changePage="changePage" :datasend="datasend"
+            :difficulty="difficulty" />
+        <AddCategoryPage v-if="page == 'AddCategoryPage'" :datasend="datasend" :changePage="changePage"
+            :pageId="pageId" />
+        <AddRecipePage v-if="page == 'AddRecipePage'" :datasend="datasend" :changePage="changePage" :pageId="pageId"
+            :getUser="getUser" />
     </template>
 </template>
 
@@ -57,6 +33,7 @@ import EditSingleRecipe from './pages/EditSingleRecipe.vue';
 import ProfilePage from './pages/ProfilePage.vue';
 import RecipesControlPage from './pages/RecipesControlPage.vue';
 import RecipesPage from './pages/RecipesPage.vue';
+import IngredientPage from './pages/IngredientPage.vue';
 import SingleRecipePage from './pages/SingleRecipePage.vue';
 import UsersControlPage from './pages/UsersControlPage.vue';
 export default {
@@ -114,6 +91,7 @@ export default {
             this.changePage('RecipesPage');
             console.log('Вышел');
         },
+
         async datasend(route, method = 'GET', formdata = null, userid = null) {
             let myHeaders = new Headers();
             myHeaders.append('Accept', 'application/json');
@@ -121,21 +99,17 @@ export default {
             if (userid) {
                 myHeaders.append('userid', userid);
             }
-
             if (localStorage.getItem('token')) {
                 myHeaders.append('Authorization', 'Bearer ' + localStorage.getItem('token'));
             }
-
             let requestOptions = {
                 method: method,
                 headers: myHeaders,
                 redirect: 'follow',
             };
-
             if (method != 'GET') {
                 requestOptions.body = formdata;
             }
-
             return await fetch(this.API + route, requestOptions).then((response) => {
                 if (response.status == 401) {
                     this.logout();
@@ -143,8 +117,6 @@ export default {
                 }
                 return response.json();
             });
-            // .then((result) => console.log(result))
-            // .catch((error) => console.error(error));
         },
     },
     components: {
@@ -158,6 +130,7 @@ export default {
         AddRecipePage,
         AddCategoryPage,
         EditSingleRecipe,
+        IngredientPage,
     },
 };
 </script>

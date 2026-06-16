@@ -22,8 +22,8 @@ class StoreIngredientRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required',
-            'unit' => 'required',
+            'name' => 'required|string',
+            'unit' => 'nullable|string'
         ];
     }
 }

@@ -14,13 +14,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
-
 Route::post('/register', [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login']);
 Route::post('/recipes', [RecipeController::class, 'index']);
-// Route::get('/recipes', [RecipeController::class, 'index']);
 Route::get('/SingleRecipe/{recipe}', [RecipeController::class, 'SingleRecipe']);
-
 Route::get('/getSteps/{recipe_id}', [RecipeStepController::class, 'getSteps']);
 Route::get('/recipes/{recipe}', [RecipeController::class, 'show']);
 Route::get('/ingredients/{recipe_id}', [IngredientController::class, 'index']);
@@ -49,4 +46,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/FaveRec/{recipe}', [FavoriteController::class, 'store']);
     Route::get('/DelFave/{favorite}', [FavoriteController::class, 'destroy']);
     Route::post('/logout', [UserController::class, 'logout']);
+    Route::get('/Ingredients', [IngredientController::class, 'getIngredients']);
+    Route::post('/Ingredients', [IngredientController::class, 'saveIngredient']);
+    Route::delete('/Ingredients/{ingredient}', [IngredientController::class, 'delIngredient']);
+    Route::put('/Ingredients/{ingredient}', [IngredientController::class, 'update']);
 });
