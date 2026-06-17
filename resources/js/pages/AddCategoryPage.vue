@@ -25,11 +25,11 @@ export default {
     },
     mounted() {
         if (this.pageId) {
-            this.getCat();
+            this.getCategory();
         }
     },
     methods: {
-        getCat() {
+        getCategory() {
             this.datasend('categories/' + this.pageId).then((result) => {
                 this.name = result.name;
             });

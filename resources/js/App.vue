@@ -47,9 +47,9 @@ export default {
             page: localStorage.getItem('page') || 'RecipesPage',
             pageId: localStorage.getItem('pageId') || null,
             difficulty: {
-                easy: 'Легко',
-                medium: 'Средне',
-                hard: 'Сложно',
+                easy: 'Легкая',
+                medium: 'Средняя',
+                hard: 'Сложная',
             },
         };
     },

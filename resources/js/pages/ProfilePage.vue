@@ -31,7 +31,7 @@
                                 {{ difficulty[fave.recipe.difficulty] }}
                             </span>
                         </div>
-                        <button class="removeFave-fave-btn" @click="removeFave(fave.id)">
+                        <button class="fave-btn" @click="removeFave(fave.id)">
                             Удалить
                         </button>
                     </div>

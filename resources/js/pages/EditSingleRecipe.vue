@@ -66,7 +66,7 @@
                 <div v-for="(step, key) in recipe.steps" :key="key" class="step-editor-card">
                     <div class="step-header">
                         <h5>Шаг {{ key + 1 }}</h5>
-                        <button class="remove-step-btn" @click="remove(step.id, key)">Удалить шаг</button>
+                        <button class="remove-step-btn" @click="removeStep(step.id, key)">Удалить шаг</button>
                     </div>
                     <div class="step-content">
                         <div class="form-group">
@@ -154,7 +154,7 @@ export default {
             if (!hasError) {
                 let formdata = new FormData();
                 formdata.append('ingredients', JSON.stringify(this.recipe.ingredients));
-                this.datasend('ingSave/' + this.pageId, 'POST', formdata).then((result) => {
+                this.datasend('saveIngredients/' + this.pageId, 'POST', formdata).then((result) => {
                     this.getRecipe();
                     if (result.saved?.ingredient) {
                         this.message = result.saved.ingredient;

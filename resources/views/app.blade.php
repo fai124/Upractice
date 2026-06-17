@@ -11,7 +11,6 @@
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <link rel="preconnect" href="https://fonts.bunny.net">
-    <link rel="stylesheet" href={{ asset("storage/assets/css/styleMob.css?v=1") }}>
     @vite(['resources/js/main.js'])
     @inertiaHead
 </head>

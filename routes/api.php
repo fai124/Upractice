@@ -29,6 +29,7 @@ Route::get('/Ingredients', [IngredientController::class, 'getIngredients']);
 
 Route::middleware('auth:sanctum')->group(function () {
 
+
     Route::post('/FaveRec/{recipe_id}', [FavoriteController::class, 'toggleFavorite']);
     Route::get('/Fave', [FavoriteController::class, 'index']);
     Route::delete('/DelFave/{favorite}', [FavoriteController::class, 'removeFavorite']);
@@ -45,7 +46,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('/ingredients/{recipe_id}', [IngredientController::class, 'index']);
     Route::get('/ingRecipe/{recipe_id}', [RecipeIngredientController::class, 'index']);
-    Route::post('/ingSave/{recipe_id}', [RecipeIngredientController::class, 'saveIngredients']);
+    Route::post('/saveIngredients/{recipe_id}', [RecipeIngredientController::class, 'saveIngredients']);
     Route::delete('/ingRem/{rec}', [RecipeIngredientController::class, 'removeIngredient']);
 
 
