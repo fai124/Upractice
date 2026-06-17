@@ -1,7 +1,6 @@
 <template>
     <HeaderComponent :datasend="datasend" :changeToken="changeToken" :logout="logout" :user="user" :isAdmin="isAdmin"
         :changePage="changePage" />
-    <NotificationComponent :changeToken="changeToken" :logout="logout" />
     <template v-if="isLoad">
         <RecipesPage v-if="page == 'RecipesPage'" :changePage="changePage" :datasend="datasend" :user="user"
             :isAdmin="isAdmin" :storage="storage" :difficulty="difficulty" :userInfo="userInfo" />
@@ -26,7 +25,6 @@
 
 <script>
 import HeaderComponent from '../components/HeaderComponent.vue';
-import NotificationComponent from '../components/NotificationComponent.vue';
 import AddCategoryPage from './pages/AddCategoryPage.vue';
 import AddRecipePage from './pages/AddRecipePage.vue';
 import EditSingleRecipe from './pages/EditSingleRecipe.vue';
@@ -123,7 +121,6 @@ export default {
         HeaderComponent,
         RecipesPage,
         SingleRecipePage,
-        NotificationComponent,
         ProfilePage,
         UsersControlPage,
         RecipesControlPage,

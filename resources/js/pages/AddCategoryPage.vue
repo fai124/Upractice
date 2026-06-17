@@ -8,12 +8,7 @@
                 <div class="error-message" v-if="errors.name">{{ errors.name.join('. ') }}</div>
             </div>
             
-            <div class="form-group">
-                <input type="text" class="form-input" placeholder="Описание (slug)" v-model="slug" />
-                <div class="error-message" v-if="errors.slug">{{ errors.slug.join('. ') }}</div>
-            </div>
-            
-            <button class="submit-btn" @click.prevent="addCategory">{{ pageId ? 'Редактировать' : 'Добавить' }} категорию</button>
+            <button class="submit-btn" @click.prevent="saveCategory">{{ pageId ? 'Редактировать' : 'Добавить' }} категорию</button>
         </div>
     </div>
 </template>
@@ -25,7 +20,6 @@ export default {
     data() {
         return {
             name: null,
-            slug: null,
             errors: {},
         };
     },
@@ -38,13 +32,11 @@ export default {
         getCat() {
             this.datasend('categories/' + this.pageId).then((result) => {
                 this.name = result.name;
-                this.slug = result.slug;
             });
         },
-        addCategory() {
+        saveCategory() {
             let formdata = new FormData();
             if (this.name) formdata.append('name', this.name);
-            if (this.slug) formdata.append('slug', this.slug);
             
             this.datasend(this.pageId ? 'EditCategory/' + this.pageId : 'categories', 'POST', formdata).then((result) => {
                 if (result.errors) {

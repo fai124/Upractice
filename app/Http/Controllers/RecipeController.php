@@ -102,7 +102,7 @@ class RecipeController extends Controller
         return $recipe;
     }
 
-    public function SingleRecipe($recipe, Request $request)
+    public function getRecipe($recipe, Request $request)
     {
         $recipe = Recipe::with('category', 'steps', 'ingredients')->findOrFail($recipe);
         $categories = Category::get();
@@ -131,7 +131,7 @@ class RecipeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateRecipeRequest $request, Recipe $recipe)
+    public function save(UpdateRecipeRequest $request, Recipe $recipe)
     {
         $recipe->category_id = $request->category_id;
         $recipe->title = $request->title;

@@ -111,7 +111,7 @@ export default {
             });
         },
         remove(id) {
-            if (confirm('Удалить ингредиент?')) {
+            if (confirm('Удалить?')) {
                 this.datasend(`Ingredients/${id}`, 'DELETE').then(() => {
                     this.getIngredients();
                 });

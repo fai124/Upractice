@@ -73,12 +73,12 @@ export default {
     },
     mounted() {
         if (this.pageId) {
-            this.getRec();
+            this.getRecipe();
         }
-        this.getCats();
+        this.getCategories();
     },
     methods: {
-        getRec() {
+        getRecipe() {
             this.datasend('recipe/' + this.pageId).then((result) => {
                 this.title = result.title;
                 this.description = result.description;
@@ -88,7 +88,7 @@ export default {
                 this.category_id = result.category_id;
             });
         },
-        getCats() {
+        getCategories() {
             this.datasend('categories').then((result) => {
                 this.categories = result;
             });

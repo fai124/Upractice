@@ -1,5 +1,5 @@
 <template>
-    <div class="recipe-detail" v-if="recipe.id">
+    <div class="recipe-detail" v-if="recipe && recipe.id">
         <div class="recipe-header">
             <img :src="storage + recipe.image_url" v-if="recipe.image_url" class="detail-img" alt="" />
             <div class="detail-info">
@@ -9,7 +9,7 @@
                 <p>Сложность: {{ difficulty[recipe.difficulty] }}</p>
                 <p class="description">{{ recipe.description }}</p>
                 <div v-if="user && !isAdmin">
-                    <button class="fave-detail-btn" @click="faveRecipe(recipe.id)">
+                    <button class="fave-detail-btn" @click="toggleFave(recipe.id)">
                         {{ faves.indexOf(recipe.id) != -1 ? 'Удалить из избранного' : 'В избранное' }}
                     </button>
                 </div>
@@ -22,7 +22,7 @@
         </div>
     </div>
 
-    <div v-if="recipe.ingredients && recipe.ingredients.length > 0" class="ingredients-section">
+    <div v-if="recipe && recipe.ingredients && recipe.ingredients.length > 0" class="ingredients-section">
         <h3>Ингредиенты:</h3>
         <table class="ingredients-table">
             <thead>
@@ -38,7 +38,7 @@
         </table>
     </div>
 
-    <div v-if="recipe.steps && recipe.steps.length > 0" class="steps-section">
+    <div v-if="recipe && recipe.steps && recipe.steps.length > 0" class="steps-section">
         <h3>Шаги приготовления:</h3>
         <div class="step-card">
             <div class="step-header">
@@ -64,7 +64,7 @@ export default {
     name: 'SingleRecipePage',
     data() {
         return {
-            recipe: {},
+            recipe: null,
             step: 0,
             ingredients: {},
             faves: [],
@@ -75,7 +75,7 @@ export default {
         this.getRec();
     },
     methods: {
-        faveRecipe(recipe) {
+        toggleFave(recipe) {
             this.datasend('FaveRec/' + recipe).then((result) => {
                 this.faves = result;
             });

@@ -14,40 +14,46 @@ use Illuminate\Support\Facades\Route;
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
+
 Route::post('/register', [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login']);
+
 Route::post('/recipes', [RecipeController::class, 'index']);
-Route::get('/SingleRecipe/{recipe}', [RecipeController::class, 'SingleRecipe']);
-Route::get('/getSteps/{recipe_id}', [RecipeStepController::class, 'getSteps']);
+Route::get('/SingleRecipe/{recipe}', [RecipeController::class, 'getRecipe']);
+Route::get('/SingleRecipeAuth/{recipe}', [RecipeController::class, 'getRecipe']);
 Route::get('/recipes/{recipe}', [RecipeController::class, 'show']);
+Route::get('/recipe/{recipe}', [RecipeController::class, 'show']);
+
+Route::get('/Ingredients', [IngredientController::class, 'getIngredients']);
+Route::post('/Ingredients', [IngredientController::class, 'save']);
+Route::delete('/Ingredients/{ingredient}', [IngredientController::class, 'removeIngredient']);
+
+Route::get('/getSteps/{recipe_id}', [RecipeStepController::class, 'getSteps']);
+Route::post('/saveStep/{recipe_id}', [RecipeStepController::class, 'saveStep']);
+Route::delete('/delStep/{id}', [RecipeStepController::class, 'removeStep']);
+
 Route::get('/ingredients/{recipe_id}', [IngredientController::class, 'index']);
 Route::get('/ingRecipe/{recipe_id}', [RecipeIngredientController::class, 'index']);
-Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/SingleRecipeAuth/{recipe}', [RecipeController::class, 'SingleRecipe']);
-    Route::get('/EditSingleRecipe/{recipe}', [RecipeController::class, 'SingleRecipe']);
-    Route::post('/changeStep/{recipe}', [UserStepController::class, 'store']);
-    Route::post('/recipes/{recipe}/favorite', [RecipeController::class, 'favorite']);
-    Route::delete('/recipes/{recipe}/favorite', [RecipeController::class, 'delFave']);
-    Route::get('/user/favorites', [UserController::class, 'favorites']);
-    Route::resource('/recipes', FavoriteController::class)->except('store', 'destroy');
-    Route::post('/addRecipe', [RecipeController::class, 'store']);
-    Route::post('/EditRecipe/{recipe}', [RecipeController::class, 'update']);
-    Route::post('/DeleteRecipe/{recipe}', [RecipeController::class, 'destroy']);
-    Route::get('/recipe/{recipe}', [RecipeController::class, 'show']);
-    Route::post('/addIng/{recipe_id}', [RecipeIngredientController::class, 'store']);
-    Route::post('/ingSave/{recipe_id}', [RecipeIngredientController::class, 'ingSave']);
-    Route::delete('/ingRem/{rec}', [RecipeIngredientController::class, 'ingRem']);
-    Route::post('/saveStep/{recipe_id}', [RecipeStepController::class, 'saveStep']);
-    Route::delete('/delStep/{id}', [RecipeStepController::class, 'delStep']);
-    Route::resource('/categories', CategoryController::class)->except('update');
-    Route::post('/EditCategory/{category}', [CategoryController::class, 'update']);
-    Route::get('/UsersControl', [UserController::class, 'UsersControl']);
-    Route::resource('/Fave', FavoriteController::class)->except('store', 'destroy');
-    Route::get('/FaveRec/{recipe}', [FavoriteController::class, 'store']);
-    Route::get('/DelFave/{favorite}', [FavoriteController::class, 'destroy']);
-    Route::post('/logout', [UserController::class, 'logout']);
-    Route::get('/Ingredients', [IngredientController::class, 'getIngredients']);
-    Route::post('/Ingredients', [IngredientController::class, 'saveIngredient']);
-    Route::delete('/Ingredients/{ingredient}', [IngredientController::class, 'delIngredient']);
-    Route::put('/Ingredients/{ingredient}', [IngredientController::class, 'update']);
-});
+Route::post('/ingSave/{recipe_id}', [RecipeIngredientController::class, 'saveIngredients']);
+Route::delete('/ingRem/{rec}', [RecipeIngredientController::class, 'removeIngredient']);
+
+Route::get('/categories', [CategoryController::class, 'index']);
+Route::post('/categories', [CategoryController::class, 'store']);
+Route::post('/EditCategory/{category}', [CategoryController::class, 'update']);
+Route::delete('/categories/{category}', [CategoryController::class, 'destroy']);
+
+Route::get('/Fave', [FavoriteController::class, 'index']);
+Route::post('/FaveRec/{recipe_id}', [FavoriteController::class, 'toggleFavorite']);
+Route::delete('/DelFave/{favorite}', [FavoriteController::class, 'removeFavorite']);
+
+Route::post('/changeStep/{recipe}', [UserStepController::class, 'saveStep']);
+
+Route::post('/addRecipe', [RecipeController::class, 'store']);
+Route::post('/EditRecipe/{recipe}', [RecipeController::class, 'update']);
+Route::delete('/DeleteRecipe/{recipe}', [RecipeController::class, 'destroy']);
+
+Route::post('/recipes/{recipe}/favorite', [RecipeController::class, 'favorite']);
+Route::delete('/recipes/{recipe}/favorite', [RecipeController::class, 'delFave']);
+
+Route::get('/UsersControl', [UserController::class, 'UsersControl']);
+Route::post('/logout', [UserController::class, 'logout']);

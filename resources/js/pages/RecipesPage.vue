@@ -65,8 +65,8 @@
                 <p class="recipe-time">Время приготовления: {{ recipe.cook_time }} минут</p>
             </div>
             <div v-if="user && !isAdmin" class="recipe-footer">
-                <button class="fave-btn" @click.prevent="faveRecipe(recipe.id)">
-                    {{ faves.indexOf(recipe.id) != -1 ? 'Удалить из избранного' : 'В избранное' }}
+                <button class="fave-btn" @click.prevent="toggleFave(recipe.id)">
+                    {{ faves?.indexOf && faves.indexOf(recipe.id) !== -1 ? 'Удалить из избранного' : 'В избранное' }}
                 </button>
             </div>
         </div>
@@ -92,8 +92,8 @@ export default {
         this.getRecipes();
     },
     methods: {
-        faveRecipe(recipe) {
-            this.datasend('FaveRec/' + recipe).then((result) => {
+        toggleFave(recipe) {
+            this.datasend('FaveRec/' + recipe, 'POST').then((result) => {
                 this.faves = result;
             });
         },

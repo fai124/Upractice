@@ -31,9 +31,8 @@ class UserStepController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Recipe $recipe, Request $request)
+    public function saveStep(Recipe $recipe, Request $request)
     {
-        // $us = UserStep::where('user_id', Auth::id())->where('recipe_id', $recipe->id)->first();
         $us = UserStep::firstOrNew(['user_id' => Auth::id(), 'recipe_id' => $recipe->id]);
         $us->step_number = $request->step_number;
         $us->save();

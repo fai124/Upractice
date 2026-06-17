@@ -40,7 +40,7 @@ class RecipeStepController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function delStep(RecipeStep $id)
+    public function removeStep(RecipeStep $id)
     {
         $id->delete();
         return response()->json(['message' => 'Шаг удалён']);

@@ -29,8 +29,9 @@ class FavoriteController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Recipe $recipe)
+    public function toggleFavorite($recipe_id)
     {
+        $recipe = Recipe::findOrFail($recipe_id);
         $fave = Favorite::where('recipe_id', $recipe->id)->where('user_id', Auth::id())->first();
         if ($fave) {
             $fave->delete();
@@ -72,7 +73,7 @@ class FavoriteController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Favorite $favorite)
+    public function removeFavorite(Favorite $favorite)
     {
         $favorite->delete();
         return response()->json(['favorite' => 'Рецепт удалён из избранного']);

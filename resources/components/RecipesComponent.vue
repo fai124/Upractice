@@ -61,8 +61,8 @@ export default {
             });
         },
         deleteRec(rec) {
-            if (confirm('Хотите удалить?')) {
-                this.datasend('DeleteRecipe/' + rec.id, 'POST').then((result) => {
+            if (confirm('Удалить?')) {
+                this.datasend('DeleteRecipe/' + rec.id, 'DELETE').then((result) => {
                     this.notif = result.Recipe;
                     setTimeout(() => { this.notif = null; }, 3000);
                     this.getRecipes();

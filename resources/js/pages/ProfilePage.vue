@@ -31,7 +31,7 @@
                                 {{ difficulty[fave.recipe.difficulty] }}
                             </span>
                         </div>
-                        <button class="remove-fave-btn" @click="remove(fave.id)">
+                        <button class="removeFave-fave-btn" @click="removeFave(fave.id)">
                             Удалить
                         </button>
                     </div>
@@ -65,8 +65,8 @@ export default {
                 this.favorites = result;
             });
         },
-        remove(fave) {
-            if (confirm('Удалить этот рецепт из избранного?')) {
+        removeFave(fave) {
+            if (confirm('Удалить?')) {
                 this.datasend('DelFave/' + fave).then(() => {
                     this.getFave();
                 });

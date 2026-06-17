@@ -19,7 +19,7 @@ class IngredientController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function saveIngredient(StoreIngredientRequest $request)
+    public function save(StoreIngredientRequest $request)
     {
     if ($request->id) {
         $ingredient = Ingredient::find($request->id);
@@ -76,7 +76,7 @@ class IngredientController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function delIngredient(Ingredient $ingredient)
+    public function removeIngredient(Ingredient $ingredient)
     {
         $ingredient->delete();
         return response()->json(['message' => 'удалён']);

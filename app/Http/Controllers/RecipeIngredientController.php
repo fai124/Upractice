@@ -21,15 +21,10 @@ class RecipeIngredientController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function ingSave($recipe_id, StoreRecipeIngredientRequest $request)
+    public function saveIngredients($recipe_id, StoreRecipeIngredientRequest $request)
     {
 
-        // return Recipe::all();
-        // return RecipeIngredient::all();
-        // return [$request->ingredients];
-        // return RecipeIngredient::all();
         foreach (json_decode($request->ingredients) as $ingr) {
-            // return [$ingr->id];
             if (isset($ingr->id)) {
                 $ing = RecipeIngredient::where("id", $ingr->id)->first();
             } else {
@@ -42,7 +37,7 @@ class RecipeIngredientController extends Controller
         }
         return response()->json(['saved' => ['ingredient' => 'Ингредиент добавлен/изменён']]);
     }
-    public function ingRem(RecipeIngredient $rec)
+    public function removeIngredient(RecipeIngredient $rec)
     {
         $rec->delete();
         return response()->json(['deleted' => 'Ингредиент удалён']);

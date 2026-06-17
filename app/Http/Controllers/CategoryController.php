@@ -6,6 +6,7 @@ use App\Models\Category;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use App\Models\Recipe;
+use Illuminate\Support\Facades\Log;
 
 class CategoryController extends Controller
 {
@@ -31,9 +32,9 @@ class CategoryController extends Controller
      */
     public function store(StoreCategoryRequest $request)
     {
+        Log::info('Store Category', $request->all());
         $category = new Category();
         $category->name = $request->name;
-        $category->slug = $request->slug;
         $category->save();
         return response()->json(['Category' => 'Категория создана']);
     }
@@ -60,7 +61,6 @@ class CategoryController extends Controller
     public function update(UpdateCategoryRequest $request, Category $category)
     {
         $category->name = $request->name;
-        $category->slug = $request->slug;
         $category->save();
         return response()->json(['Category' => 'Категория отредактирована']);
     }

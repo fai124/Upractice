@@ -16,7 +16,7 @@
 
         <div class="ingredients-editor">
             <h3>Ингредиенты</h3>
-            <button class="add-btn" @click="addIng">+ Добавить ингредиент</button>
+            <button class="add-btn" @click="addIngredient">+ Добавить ингредиент</button>
             
             <div v-if="recipe.ingredients && recipe.ingredients.length > 0" class="ingredients-table-wrapper">
                 <table class="edit-table">
@@ -47,7 +47,7 @@
                                 <div v-if="errors[key]?.quantity" class="error-small">{{ errors[key].quantity }}</div>
                             </td>
                             <td>
-                                <button class="remove-row-btn" @click="ingRem(key, ing.id)">−</button>
+                                <button class="remove-row-btn" @click="removeIngredient(key, ing.id)">−</button>
                             </td>
                         </tr>
                     </tbody>
@@ -107,24 +107,24 @@ export default {
     },
     props: ['datasend', 'changePage', 'user', 'pageId', 'isAdmin', 'storage', 'difficulty'],
     mounted() {
-        this.getRec();
+        this.getRecipe();
     },
     methods: {
-        getRec() {
+        getRecipe() {
             this.datasend('SingleRecipe/' + this.pageId).then((result) => {
                 this.ingRecipe = result.ingredients;
                 this.recipe = result.recipe;
                 this.errors = [];
             });
         },
-        addIng() {
+        addIngredient() {
             if (!this.recipe.ingredients) this.recipe.ingredients = [];
             this.recipe.ingredients.push({ quantity: null, ingredient_id: null });
         },
-        ingRem(key, id = null) {
-            if (confirm('Хотите удалить?')) {
+        removeIngredient(key, id = null) {
+            if (confirm('Удалить?')) {
                 if (id) {
-                    this.datasend('ingRem/' + id, 'DELETE').then(() => {});
+                    this.datasend('removeIngredient/' + id, 'DELETE').then(() => {});
                 }
                 this.recipe.ingredients.splice(key, 1);
                 this.message = null;
@@ -155,7 +155,7 @@ export default {
                 let formdata = new FormData();
                 formdata.append('ingredients', JSON.stringify(this.recipe.ingredients));
                 this.datasend('ingSave/' + this.pageId, 'POST', formdata).then((result) => {
-                    this.getRec();
+                    this.getRecipe();
                     if (result.saved?.ingredient) {
                         this.message = result.saved.ingredient;
                         setTimeout(() => { this.message = null; }, 3000);
@@ -197,15 +197,15 @@ export default {
                             if (result.saved?.step) {
                                 this.message = result.saved.step;
                                 setTimeout(() => { this.message = null; }, 3000);
-                                this.getRec();
+                                this.getRecipe();
                             }
                         });
                 });
             }
         },
-        remove(id, key) {
+        removeStep(id, key) {
             if (id > 0) {
-                if (confirm('Хотите удалить?')) {
+                if (confirm('Удалить?')) {
                     this.datasend('delStep/' + id, 'DELETE').then(() => {
                         this.recipe.steps.splice(key, 1);
                     });
